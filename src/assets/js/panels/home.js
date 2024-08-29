@@ -5,9 +5,9 @@
 
 'use strict';
 
-import { logger, database, changePanel} from '../utils.js';
+import {database, changePanel} from '../utils.js';
 
-const { Launch, Status } = require('minecraft-java-core-azbetter');
+const { Launch, Status } = require('minecraft-java-core');
 const { ipcRenderer } = require('electron');
 const launch = new Launch();
 const pkg = require('../package.json');
@@ -24,6 +24,8 @@ class Home {
         this.initLaunch();
         this.initStatusServer();
         this.initBtn();
+        this.bkgrole();
+        this.initLinks();
     }
 
     async initNews() {
@@ -108,116 +110,151 @@ class Home {
         }
     }
     
+    async bkgrole () {
+        let uuid = (await this.database.get('1234', 'accounts-selected')).value;
+        let account = (await this.database.get(uuid.selected, 'accounts')).value;
+    
+        if (this.config.whitelist_activate === true) {
+        if (!this.config.whitelist.includes(account.name)) {
+            document.querySelector(".play-btn").style.backgroundColor = "#696969"; // Couleur de fond grise
+            document.querySelector(".play-btn").style.pointerEvents = "none"; // Désactiver les événements de souris
+            document.querySelector(".play-btn").style.boxShadow = "none";
+            document.querySelector(".play-btn").textContent = "Indisponible";        
+        }
+    }
+        
+        if (account.user_info.role.name === this.config.role_data.role1.name) {
+            document.body.style.background = `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(${this.config.role_data.role1.background}) black no-repeat center center scroll`;
+        }
+        if (account.user_info.role.name === this.config.role_data.role2.name) {
+            document.body.style.background = `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(${this.config.role_data.role2.background}) black no-repeat center center scroll`;
+        }
+        if (account.user_info.role.name === this.config.role_data.role3.name) {
+            document.body.style.background = `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(${this.config.role_data.role3.background}) black no-repeat center center scroll`;
+        }
+        if (account.user_info.role.name === this.config.role_data.role4.name) {
+            document.body.style.background = `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(${this.config.role_data.role4.background}) black no-repeat center center scroll`;
+        }
+        if (account.user_info.role.name === this.config.role_data.role5.name) {
+            document.body.style.background = `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(${this.config.role_data.role5.background}) black no-repeat center center scroll`;
+        }
+        if (account.user_info.role.name === this.config.role_data.role6.name) {
+            document.body.style.background = `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(${this.config.role_data.role6.background}) black no-repeat center center scroll`;
+        }
+        if (account.user_info.role.name === this.config.role_data.role7.name) {
+            document.body.style.background = `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(${this.config.role_data.role7.background}) black no-repeat center center scroll`;
+        }
+        if (account.user_info.role.name === this.config.role_data.role8.name) {
+            document.body.style.background = `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(${this.config.role_data.role8.background}) black no-repeat center center scroll`;
+        }
+        
+       
+    }
+
+    
+
     async initLaunch() {
-        document.querySelector('.play-btn').addEventListener('click', async () => {
-            let urlpkg = pkg.user ? `${pkg.url}/${pkg.user}` : pkg.url;
-            let uuid = (await this.database.get('1234', 'accounts-selected')).value;
-            let account = (await this.database.get(uuid.selected, 'accounts')).value;
-            let ram = (await this.database.get('1234', 'ram')).value;
-            let javaPath = (await this.database.get('1234', 'java-path')).value;
-            let javaArgs = (await this.database.get('1234', 'java-args')).value;
-            let Resolution = (await this.database.get('1234', 'screen')).value;
-            let launcherSettings = (await this.database.get('1234', 'launcher')).value;
-            let screen;
+        document.querySelectorAll('.play-btn').forEach(button => {
+            button.addEventListener('click', async () => {
+                let urlpkg = pkg.user ? `${pkg.url}/${pkg.user}` : pkg.url;
+                let uuid = (await this.database.get('1234', 'accounts-selected')).value;
+                let account = (await this.database.get(uuid.selected, 'accounts')).value;
+                let ram = (await this.database.get('1234', 'ram')).value;
+                let javaPath = (await this.database.get('1234', 'java-path')).value;
+                let javaArgs = (await this.database.get('1234', 'java-args')).value;
+                let Resolution = (await this.database.get('1234', 'screen')).value;
+                let launcherSettings = (await this.database.get('1234', 'launcher')).value;
+                let screen;
+    
+                let info = document.querySelector(".play-btn")
 
-            let playBtn = document.querySelector('.play-btn');
-            let info = document.querySelector(".text-download")
-            let progressBar = document.querySelector(".progress-bar")
 
-            if (Resolution.screen.width == '<auto>') {
-                screen = false
-            } else {
-                screen = {
-                    width: Resolution.screen.width,
-                    height: Resolution.screen.height
+                info.textContent = `Vérification`
+
+                document.getElementById('btn-playee').style.backgroundImage = 'linear-gradient(145deg, var(--box-button-gradient-1) 0%, var(--box-button-gradient-2) 100%)';
+    
+                if (Resolution.screen.width == '<auto>') {
+                    screen = false
+                } else {
+                    screen = {
+                        width: Resolution.screen.width,
+                        height: Resolution.screen.height
+                    }
                 }
-            }
-
-            let opts = {
-                url: `${pkg.settings}/data`,
-                authenticator: account,
-                timeout: 10000,
-                path: `${dataDirectory}/${process.platform == 'darwin' ? this.config.dataDirectory : `.${this.config.dataDirectory}`}`,
-                version: this.config.game_version,
-                detached: launcherSettings.launcher.close === 'close-all' ? false : true,
-                downloadFileMultiple: 30,
-                loader: {
-                    type: this.config.loader.type,
-                    build: this.config.loader.build,
-                    enable: this.config.loader.enable,
-                },
-                verify: this.config.verify,
-                ignored: this.config.ignored,
-
-                java: this.config.java,
-                memory: {
-                    min: `${ram.ramMin * 1024}M`,
-                    max: `${ram.ramMax * 1024}M`
+    
+                let opts = {
+                    url: `${pkg.settings}/data`,
+                    authenticator: account,
+                    timeout: 10000,
+                    path: `${dataDirectory}/${process.platform == 'darwin' ? this.config.dataDirectory : `.${this.config.dataDirectory}`}`,
+                    version: this.config.game_version,
+                    detached: launcherSettings.launcher.close === 'close-all' ? false : true,
+                    downloadFileMultiple: 30,
+                    loader: {
+                        type: this.config.loader.type,
+                        build: this.config.loader.build,
+                        enable: this.config.loader.enable,
+                    },
+                    verify: this.config.verify,
+                    ignored: this.config.ignored,
+    
+                    java: this.config.java,
+                    memory: {
+                        min: `${ram.ramMin * 1024}M`,
+                        max: `${ram.ramMax * 1024}M`
+                    }
                 }
-            }
-
-            playBtn.style.display = "none"
-            info.style.display = "block"
-            launch.Launch(opts);
-
-            launch.on('extract', extract => {
-                console.log(extract);
+    
+                launch.Launch(opts);
+    
+                launch.on('extract', extract => {
+                    console.log(extract);
+                });
+    
+                launch.on('progress', (progress, size) => {
+                    document.querySelector(".play-btn").textContent = `Téléchargement ${((progress / size) * 100).toFixed(0)}%`
+                    ipcRenderer.send('main-window-progress', { progress, size })
+                });
+    
+                launch.on('check', (progress, size) => {
+                    document.querySelector(".play-btn").textContent = `Vérification ${((progress / size) * 100).toFixed(0)}%`
+                });
+    
+                launch.on('estimated', (time) => {
+                    let hours = Math.floor(time / 3600);
+                    let minutes = Math.floor((time - hours * 3600) / 60);
+                    let seconds = Math.floor(time - hours * 3600 - minutes * 60);
+                    console.log(`${hours}h ${minutes}m ${seconds}s`);
+                })
+    
+                launch.on('speed', (speed) => {
+                    console.log(`${(speed / 1067008).toFixed(2)} Mb/s`)
+                })
+    
+                launch.on('patch', patch => {
+                    console.log(patch);
+                    info.textContent = `Patch en cours...`
+                });
+    
+                launch.on('data', (e) => {
+                    if (launcherSettings.launcher.close === 'close-launcher') ipcRenderer.send("main-window-hide");
+                    ipcRenderer.send('main-window-progress-reset')
+                    info.textContent = `Demarrage en cours...`
+                    logger.minecraft.log(e);
+                })
+    
+                launch.on('close', code => {
+                    if (launcherSettings.launcher.close === 'close-launcher') ipcRenderer.send("main-window-show");
+                    info.textContent = `JOUER`
+                    document.getElementById('btn-playee').style.cssText = '';
+                    console.log('Close');
+                });
+    
+                launch.on('error', err => {
+                    console.log(err);
+                });
             });
-
-            launch.on('progress', (progress, size) => {
-                progressBar.style.display = "block"
-                document.querySelector(".text-download").innerHTML = `Téléchargement ${((progress / size) * 100).toFixed(0)}%`
-                ipcRenderer.send('main-window-progress', { progress, size })
-                progressBar.value = progress;
-                progressBar.max = size;
-            });
-
-            launch.on('check', (progress, size) => {
-                progressBar.style.display = "block"
-                document.querySelector(".text-download").innerHTML = `Vérification ${((progress / size) * 100).toFixed(0)}%`
-                progressBar.value = progress;
-                progressBar.max = size;
-            });
-
-            launch.on('estimated', (time) => {
-                let hours = Math.floor(time / 3600);
-                let minutes = Math.floor((time - hours * 3600) / 60);
-                let seconds = Math.floor(time - hours * 3600 - minutes * 60);
-                console.log(`${hours}h ${minutes}m ${seconds}s`);
-            })
-
-            launch.on('speed', (speed) => {
-                console.log(`${(speed / 1067008).toFixed(2)} Mb/s`)
-            })
-
-            launch.on('patch', patch => {
-                console.log(patch);
-                info.innerHTML = `Patch en cours...`
-            });
-
-            launch.on('data', (e) => {
-                new logger('Minecraft', '#36b030');
-                if (launcherSettings.launcher.close === 'close-launcher') ipcRenderer.send("main-window-hide");
-                ipcRenderer.send('main-window-progress-reset')
-                progressBar.style.display = "none"
-                info.innerHTML = `Demarrage en cours...`
-                console.log(e);
-            })
-
-            launch.on('close', code => {
-                if (launcherSettings.launcher.close === 'close-launcher') ipcRenderer.send("main-window-show");
-                progressBar.style.display = "none"
-                info.style.display = "none"
-                playBtn.style.display = "block"
-                info.innerHTML = `Vérification`
-                new logger('Launcher', '#7289da');
-                console.log('Close');
-            });
-
-            launch.on('error', err => {
-                console.log(err);
-            });
-        })
+        });
     }
 
     async initStatusServer() {
@@ -229,18 +266,28 @@ class Home {
 
         if (!serverPing.error) {
             nameServer.textContent = this.config.status.nameServer;
-            serverMs.innerHTML = `<span class="green">En ligne</span> - ${serverPing.ms}ms`;
+            serverMs.innerHTML = `<span class="green">Opérationnel</span> - ${serverPing.ms}ms`;
             online.classList.toggle("off");
             playersConnected.textContent = serverPing.playersConnect;
         } else if (serverPing.error) {
             nameServer.textContent = 'Serveur indisponible';
-            serverMs.innerHTML = `<span class="red">Hors ligne</span>`;
+            serverMs.innerHTML = `<span class="red">Fermé</span>`;
         }
     }
 
+    initLinks(){
+        let status = document.querySelector(".status");
+        status.addEventListener("click", () => {
+            require('electron').shell.openExternal("https://status.frontiercraft.fr");
+        });
+
+      }
+
     initBtn() {
-        let settings_url = pkg.user ? `${pkg.settings}/${pkg.user}` : pkg.settings
         document.querySelector('.settings-btn').addEventListener('click', () => {
+            changePanel('settings');
+        });
+        document.querySelector('.account-btn').addEventListener('click', () => {
             changePanel('settings');
         });
     }
