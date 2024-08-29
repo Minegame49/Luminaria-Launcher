@@ -1,10 +1,10 @@
 {
-    "name": "Conflictura",
-    "preductname": "Conflictura Launcher",
+    "name": "LuminariaLauncher",
+    "preductname": "Luminaria Launcher",
     "version": "2.4.2",
-    "description": "Conflictura modded server launcher",
+    "description": "Launcher V2 de Luminaria",
     "main": "src/app.js",
-    "author": "Luuxis/Riptiaz",
+    "author": "Minegame499",
     "settings": "https://launcher.conflictura.eu",
     "engines": {
         "node": "16.x.x"
@@ -34,6 +34,6 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/Riptiaz/CentralCorp-Launcher.git"
+        "url": "git+https://github.com/Minegame49/Luminaria-Launcher.git"
     }
 }
