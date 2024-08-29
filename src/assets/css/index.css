@@ -12,7 +12,6 @@ body {
     background-color: var(--background);
     font-family: "Poppins";
     letter-spacing: 0px;
-    -webkit-user-select: none;
     border-radius: 10px;
     overflow: hidden;
 }
