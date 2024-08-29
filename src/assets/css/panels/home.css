@@ -450,7 +450,6 @@
 .body-header .logo {
     margin-top: 52px;
     transition: filter 0.2s;
-    -webkit-user-select: none;
 }
 
 .body-header .play {
@@ -464,7 +463,6 @@
     border-radius: 19px;
     font: normal normal bold 14px/23px Poppins;
     letter-spacing: 0px;
-    -webkit-user-select: none;
     transition: all 0.2s;
     padding-right: 15px;
     cursor: pointer;

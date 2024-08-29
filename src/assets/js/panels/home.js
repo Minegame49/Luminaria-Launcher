@@ -278,7 +278,7 @@ class Home {
     initLinks(){
         let status = document.querySelector(".status");
         status.addEventListener("click", () => {
-            require('electron').shell.openExternal("https://status.frontiercraft.fr");
+            require('electron').shell.openExternal("");
         });
 
       }

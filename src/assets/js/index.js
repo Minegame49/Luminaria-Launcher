@@ -22,15 +22,13 @@ class Splash {
     async startAnimation() {
         config.GetConfig().then(res => {
             let splashes = [
-                { "message": "Chargement en cours... Patience.", "author": "Vmbr0" },
-                { "message": "L'attente en vaut la peine.", "author": "Vmbr0" },               
-                { "message": "#On aime les chargements", "author": "Eth0" },               
-                { "message": "Dans l'attente réside la promesse.", "author": "Eth0" },
-                { "message": "Chargement... Le silence du numérique.", "author": "Vmbr0" },
-                { "message": "Le temps d'attente révèle le caractère.", "author": "Eth0" },
-                { "message": "La magie du chargement.", "author": "Eth0" },  
-                { "message": "Chargemeeeeeeeent", "author": "MineGame499" },
-                { "message": "Repose en Paix Alcatraz69", "author": "Tous le staff" },
+                { "message": "Chargement en cours... Patience.", "author": "Xeroxx" },
+                { "message": "L'attente en vaut la peine.", "author": "Minegame499" },               
+                { "message": "Passez une magnifique journée sur Luminaria", "author": "Minegame499" },               
+                { "message": "Dans l'attente réside la promesse.", "author": "Xeroxx" },
+                { "message": "Prêt à jouer a Luminaria ?", "author": "Xeroxx" },
+                { "message": "Lancementtttt", "author": "Minegame499" },  
+                { "message": "Chargemeeeeeeeent", "author": "Minegame499" },
             ];
             let splash = splashes[Math.floor(Math.random() * splashes.length)];
         this.splashMessage.textContent = splash.message;
