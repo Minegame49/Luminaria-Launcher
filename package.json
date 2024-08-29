@@ -1,10 +1,10 @@
 {
     "name": "luminaria",
     "preductname": "Luminaria Launcher",
-    "version": "2.5.7",
+    "version": "2.5.8",
     "description": "Launcher Officiel de Luminaria V2",
     "main": "src/app.js",
-    "author": "Eth0/Minegame499/Riptiaz",
+    "author": "/Minegame499/Riptiaz",
     "settings": "https://lch.luminaria-mc.fr/settings",
     "engines": {
         "node": "16.x.x"
