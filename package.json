@@ -5,7 +5,7 @@
     "description": "Launcher Officiel de Luminaria V2",
     "main": "src/app.js",
     "author": "/Minegame499/Riptiaz",
-    "settings": "https://lch.luminaria-mc.fr",
+    "settings": "https://play.luminaria-mc.fr",
     "engines": {
         "node": "16.x.x"
     },
